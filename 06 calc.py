@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+# import re
 
 
 class Ui_window(object):
@@ -18,10 +19,18 @@ class Ui_window(object):
         dispText = self.displayLabel.text()
         
         if text == "=":
+
+            # if "%" in dispText:
+            #     n = dispText.count("%")
+            #     for i in range(n):
+            #         print(re.split(r" + - * /", dispText))
+            # return
+
+
             value = eval(dispText.replace("X", "*"))
             if value == int(value):
                 value = int(value)
-            print(value)
+            # print(value)
             self.displayLabel.setText(str(value)[:10])
             return
 
@@ -30,7 +39,7 @@ class Ui_window(object):
             return
 
         if text == "➙":
-            print(f"{dispText[:-1]=}")
+            # print(f"{dispText[:-1]=}")
             if dispText[:-1] == "":
                 self.displayLabel.setText("0")
                 return
@@ -45,14 +54,14 @@ class Ui_window(object):
                 return
             self.displayLabel.setText(dispText[1:])
 
-        if text in "+-X/" and len(dispText) > 0 and dispText[-1] in "+-X/":
+        if text in "+-X/%" and len(dispText) > 0 and dispText[-1] in "+-X/%":
             if dispText[-1] == text:
                 return
-            self.displayLabel.setText(dispText[:-1] + text.replace("X"))
+            self.displayLabel.setText(dispText[:-1] + text)
             return
 
         if dispText == "0":
-            if text in "+-X/":
+            if text in "+-X/%":
                 return
             if text != ".":
                 self.displayLabel.setText("")
